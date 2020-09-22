@@ -1,0 +1,33 @@
+[2020/09/22 12:32:03] - Programa inicializado.
+[2020/09/22 12:32:03] - Erro ao carregar configurações.
+[2020/09/22 12:32:03] - Threads inicializadas.
+[2020/09/22 12:32:03] - Inicialização completa
+[2020/09/22 12:32:29] - Botão: Cartão/Chave
+[2020/09/22 12:32:32] - Introdução da chave/cartão: 1234
+[2020/09/22 12:33:35] - Programa inicializado.
+[2020/09/22 12:33:35] - Configurações carregadas.
+[2020/09/22 12:33:35] - Threads inicializadas.
+[2020/09/22 12:33:35] - Inicialização completa
+[2020/09/22 12:33:38] - Botão: Cartão/Chave
+[2020/09/22 12:33:41] - Introdução da chave/cartão: 1234
+[2020/09/22 12:33:44] - Chave válida. Acesso concedido!
+[2020/09/22 12:33:44] - Chave verificada
+[2020/09/22 12:33:46] - Botão: Entrada de carro
+[2020/09/22 12:33:47] - Entrada de carro.
+[2020/09/22 12:33:47] - Cancela fechada
+[2020/09/22 12:33:47] - Configurações guardadas.
+[2020/09/22 18:06:45] - Programa inicializado.
+[2020/09/22 18:06:45] - Configurações carregadas.
+[2020/09/22 18:06:45] - Threads inicializadas.
+[2020/09/22 18:06:45] - Inicialização completa
+[2020/09/22 18:06:55] - Botão: Cartão/Chave
+[2020/09/22 18:06:57] - Introdução da chave/cartão: 1234
+[2020/09/22 18:07:00] - Chave válida. Acesso concedido!
+[2020/09/22 18:07:00] - Chave verificada
+[2020/09/22 18:07:08] - Botão: Saída de carro
+[2020/09/22 18:07:08] - Cancela aberta
+[2020/09/22 18:07:09] - Saída de carro.
+[2020/09/22 18:07:10] - Cancela fechada
+[2020/09/22 18:07:10] - Configurações guardadas.
+[2020/09/22 18:07:11] - Programa fechado.
+
