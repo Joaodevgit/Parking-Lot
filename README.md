@@ -16,6 +16,12 @@ Some of the project screenshots
 
 ## Documentation
 
+## Project Contributors
+| João Pereira | Francisco Spínola |
+| :---: |:---:| 
+| ![João Pereira](https://avatars2.githubusercontent.com/u/44362304?s=200&u=e779f8e4e1d4788360e7478a675df73f219b42b4&v=3)| ![Francisco Spínola](https://user-images.githubusercontent.com/44362304/94473787-94681900-01c4-11eb-89a4-9b80aa9a7b9f.png?s=200&v=3) |
+| <a href="https://github.com/Joaodevgit" target="_blank">`Joaodevgit`</a> | <a href="https://github.com/fspinola85" target="_blank">`fspinola85`</a>|
+
 ## License
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
