@@ -1,3 +1,5 @@
+package ParkingLot;
+
 import java.util.concurrent.Semaphore;
 import javax.swing.*;
 import java.io.*;
@@ -9,19 +11,19 @@ import java.nio.charset.*;
 
 
 /*
-* Valores aos quais o semáforo usa para autorizar (flag): Main - 1
-                                                          Cancela - 2
-                                                          Semáforo - 3
-* Valores da ação de cada botão que são usados no switch case (action): Passar o Cartão (C) - 1
-                                                                        Entrada do Carro (E) - 2
-                                                                        Saída do Carro (S) - 3
-                                                                        Abrir/Fechar Cancela (A/F) 4
-                                                                        Resetar o sistema (R) - 5
-                                                                        Parar o sistema (P) - 6
+* Values that the semaphore uses to authorize (flag): Main - 1
+                                                      Gate - 2
+                                                      Semáforo - 3
+* Action values for each button that are used in the switch case (action): Enter keycard code (C) - 1
+                                                                           Car Entrance (E) - 2
+                                                                           Car Exit (Ex) - 3
+                                                                           Open/Close Gate (O/C) 4
+                                                                           Reset System (R) - 5
+                                                                           Stop System (S) - 6
  */
 /**
- * @author João Pereira Número: 8170202 Turma:LEI2T1
- * @author Francisco Spínola Número:8180140 Turma:LSIRC2T1
+ * @author João Pereira
+ * @author Francisco Spínola
  */
 public class Main extends Thread implements Runnable {
 
@@ -39,22 +41,23 @@ public class Main extends Thread implements Runnable {
         this.gate = new Gate(park, sem);
         this.light = new Light(park, sem);
         try {
-            this.park.log("Programa inicializado.");
+            this.park.log("Program initialized.");
         } catch (IOException ex) {
-            System.out.println("ERRO");
+            System.out.println("ERROR");
         }
         try {
             load(this.park);
         } catch (IOException ex) {
             try {
-                this.park.log("Erro ao carregar configurações.");
-            } catch (IOException e) {}
+                this.park.log("Error loading configurations.");
+            } catch (IOException e) {
+            }
             System.out.println(ex.getMessage());
         }
     }
 
     /**
-     * Método que controla o parque de estacionamento (Park)
+     * Method that controls the parking lot (Park)
      */
     @Override
     public void run() {
@@ -62,22 +65,23 @@ public class Main extends Thread implements Runnable {
         this.gate.start();
         this.light.start();
         try {
-            this.park.log("Threads inicializadas.");
+            this.park.log("Initialized Threads.");
         } catch (IOException ex) {
-            System.out.println("ERRO");
+            System.out.println("ERROR");
         }
-        this.park.setSlotsL(new JLabel("Lugares ocupados: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS));
-        if (this.park.getMode())
-            this.park.setModeL(new JLabel("Modo de Cancela: A"));
-        else
-            this.park.setModeL(new JLabel("Modo de Cancela: F"));
-        JFrame frame = new JFrame("Gestor de Parque");
+        this.park.setSlotsL(new JLabel("Occupied places: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS));
+        if (this.park.getMode()) {
+            this.park.setModeL(new JLabel("Gate Mode: O"));
+        } else {
+            this.park.setModeL(new JLabel("Gate Mode: C"));
+        }
+        JFrame frame = new JFrame("Park Manager");
         frame.setUndecorated(true);
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
         JPanel panel3 = new JPanel();
-        this.park.setExitB(new JButton("Fechar"));
-        panel1.add(new JLabel("GESTOR DE PARQUE"));
+        this.park.setExitB(new JButton("Close"));
+        panel1.add(new JLabel("PARK MANAGER"));
         panel1.setBackground(Color.lightGray);
         panel2.add(this.park.getSlotsL());
         panel2.add(this.park.getModeL());
@@ -96,7 +100,7 @@ public class Main extends Thread implements Runnable {
         frame.setVisible(true);
         this.park.getExitB().addActionListener(this.park);
         try {
-            this.park.log("Inicialização completa");
+            this.park.log("Full initialization");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -104,21 +108,21 @@ public class Main extends Thread implements Runnable {
         while (true) {
             try {
                 /**
-                 * Se a flag obtiver o valor 1 significa que o utilizador
-                 * carregou em algum botão do keycard caso contrário a main fica
-                 * à espera de uma nova interação do utilizador
+                 * If the flag gets a value of 1 it means that the user has
+                 * pressed a button on the keycard otherwise the Main class is
+                 * waiting for a new user interaction
                  */
-                if (this.park.getFlag() == this.park.COMUNICA_MAIN) { // variável nova
+                if (this.park.getFlag() == this.park.COMUNICA_MAIN) {
                     try {
-                        this.sem.acquire(); // reduz o nº de autorizações do semáforo
+                        this.sem.acquire(); // reduces the number of semaphore authorizations
                         this.park.setFlag(0);
                     } catch (InterruptedException ex) {
                         System.out.println(ex.getMessage());
                     }
                     /**
-                     * Se não foi efetuada nenhuma ação , ou seja, se não foi
-                     * carregado nenhum botão a main fica à espera que tal
-                     * aconteça e entretanto a thread é suspensa
+                     * If no action was taken, that is, if no button was
+                     * pressed, the main class waits for this to happen and
+                     * meanwhile the thread is suspended
                      */
                     if (this.park.getAction() < 1 || this.park.getAction() > 6) {
                         this.park.espera();
@@ -126,23 +130,24 @@ public class Main extends Thread implements Runnable {
 
                     switch (this.park.getAction()) {
                         /**
-                         * Quando o utilizador carrega no botão "C" (action = 1)
+                         * When the user presses the "C" button (action = 1)
                          */
                         case 1:
                             try {
                                 /**
-                                 * Se o sistema não estiver bloqueado
+                                 * If the system is not locked
                                  */
                                 if (!this.park.isBlock()) {
-                                    this.park.log("Botão: Cartão/Chave");
+                                    this.park.log("Button: Card/Key");
                                     /**
-                                     * O utilizador introduz uma chave
+                                     * The user enters a key
                                      */
                                     this.keycardButtons.C();
                                     /**
-                                     * O Sistema verifica se a chave introduzida
-                                     * pelo utilizador é válida ou não e a main
-                                     * comunica com a cancela (flag = 2)
+                                     * The system checks whether the key entered
+                                     * by the user is valid or not and the main
+                                     * class communicates with the Gate class
+                                     * (flag = 2)
                                      */
                                     this.park.verifyKey(this.park.getCodeKey());
                                     this.park.setFlag(this.park.COMUNICA_CANCELA);
@@ -150,10 +155,10 @@ public class Main extends Thread implements Runnable {
                                     this.park.acordaTodas();
                                 } else {
                                     /**
-                                     * Se o sistema estiver bloqueado
+                                     * If the system is locked
                                      */
                                     this.keycardButtons.blocked();
-                                    this.park.log("Sistema bloqueado(Botão: Cartão/Chave)");
+                                    this.park.log("Locked System (Button: Card/Key)");
                                 }
                                 this.park.setAction(0);
                             } catch (IOException ex) {
@@ -161,32 +166,33 @@ public class Main extends Thread implements Runnable {
                             }
                             break;
                         /**
-                         * Quando o utilizador carrega no botão "E" (action = 2)
+                         *
+                         * When the user presses the "E" button (action = 2)
                          */
                         case 2:
                             try {
                                 /**
-                                 * Se o sistema não estiver bloqueado
+                                 * If the system is not locked
                                  */
                                 if (!this.park.isBlock()) {
                                     /**
-                                     * O utilizador já introduziu uma chave
-                                     * válida antes
+                                     * The user has already entered a valid key
+                                     * before
                                      */
-                                        this.park.log("Botão: Entrada de carro");
-                                        this.E();
-                                        /**
-                                         * Escreve para o ficheiro "config" o
-                                         * novo nº de lugares ocupados
-                                         */
-                                        write();
+                                    this.park.log("Button: Car Entrance");
+                                    this.E();
+                                    /**
+                                     * Write to the "config" file the new number
+                                     * of occupied places
+                                     */
+                                    write();
                                     this.park.setAction(0);
                                 } else {
                                     /**
-                                     * Se o sistema estiver bloqueado
+                                     * If the system is locked
                                      */
                                     this.keycardButtons.blocked();
-                                    this.park.log("Sistema bloqueado(Botão: Entrada de carro)");
+                                    this.park.log("Locked System (Button: Car Entrance)");
                                 }
                             } catch (IOException e) {
                                 System.out.println(e.getMessage());
@@ -194,27 +200,27 @@ public class Main extends Thread implements Runnable {
 
                             break;
                         /**
-                         * Quando o utilizador carrega no botão "S" (action = 3)
+                         * When the user presses the "Ex" button (action = 3)
                          */
                         case 3:
                             try {
                                 /**
-                                 * Se o sistema não estiver bloqueado
+                                 * If the system is not locked
                                  */
                                 if (!this.park.isBlock()) {
-                                    this.park.log("Botão: Saída de carro");
+                                    this.park.log("Button: Car Exit");
                                     this.S();
                                     /**
-                                     * Escreve para o ficheiro "config" o novo
-                                     * nº de lugares ocupados
+                                     * Write to the "config" file the new number
+                                     * of occupied places
                                      */
                                     write();
                                 } else {
                                     /**
-                                     * Se o sistema estiver bloqueado
+                                     * If the system is locked
                                      */
                                     this.keycardButtons.blocked();
-                                    this.park.log("Sistema bloqueado(Botão: Saída de carro)");
+                                    this.park.log("Locked System (Button: Car Exit)");
                                 }
                                 this.park.setAction(0);
                             } catch (IOException e) {
@@ -222,22 +228,23 @@ public class Main extends Thread implements Runnable {
                             }
                             break;
                         /*
-                         * Quando o utilizador carrega no botão "A/F"(action = 4)
+                         * When the user presses the "O/C" button (action = 4)
                          */
                         case 4:
                             try {
                                 /**
-                                 * Se o sistema não estiver bloqueado
+                                 * If the system is not locked
                                  */
                                 if (!this.park.isBlock()) {
-                                    this.park.log("Botão: Abrir/Fechar cancela");
+                                    this.park.log("Button: Open/Close gate");
                                     this.keycardButtons.AF();
-                                    if (this.park.getMode())
-                                        this.park.getModeL().setText("Modo de Cancela: A");
-                                    else
-                                        this.park.getModeL().setText("Modo de Cancela: F");
+                                    if (this.park.getMode()) {
+                                        this.park.getModeL().setText("Gate Mode: O");
+                                    } else {
+                                        this.park.getModeL().setText("Gate Mode: C");
+                                    }
                                     /**
-                                     * A thread é adormecida durante 500 ms
+                                     * The thread is asleep for 500 ms
                                      */
                                     try {
                                         Thread.sleep(500);
@@ -245,17 +252,18 @@ public class Main extends Thread implements Runnable {
                                         System.out.println(ex.getMessage());
                                     }
                                     /**
-                                     * A main comunica com a cancela (flag = 2)
+                                     * The Main class communicates with the Gate
+                                     * class (flag = 2)
                                      */
                                     this.park.setFlag(this.park.COMUNICA_CANCELA);
                                     this.sem.release();
                                     this.park.acordaTodas();
                                 } else {
                                     /**
-                                     * Se o sistema estiver bloqueado
+                                     * If the system is locked
                                      */
                                     this.keycardButtons.blocked();
-                                    this.park.log("Sistema bloqueado(Botão: Abrir/Fechar cancela)");
+                                    this.park.log("Locked System (Button: Open/Close gate)");
                                 }
                                 this.park.setAction(0);
                             } catch (IOException e) {
@@ -263,33 +271,34 @@ public class Main extends Thread implements Runnable {
                             }
                             break;
                         /**
-                         * Quando o utilizador carrega no botão "R" (action = 5)
+                         * When the user presses the "R" button (action = 5)
                          */
                         case 5:
                             try {
                                 /**
-                                 * Se o sistema não estiver bloqueado
+                                 * If the system is not locked
                                  */
                                 if (!this.park.isBlock()) {
-                                    this.park.log("Botão: Reinicio do sistema");
+                                    this.park.log("Button: System Reset");
                                     this.keycardButtons.R();
                                     write();
                                     /**
-                                     * A thread é adormecida durante 100 ms
+                                     * The thread is asleep for 100 ms
                                      */
                                     try {
                                         Thread.sleep(100);
                                     } catch (InterruptedException ex) {
                                         System.out.println(ex.getMessage());
                                     }
-                                    /*
-                                     * A main comunica com a cancela (flag = 2)
+                                    /**
+                                     * The Main class communicates with the Gate
+                                     * class (flag = 2)
                                      */
                                     this.park.setFlag(this.park.COMUNICA_CANCELA);
                                     this.sem.release();
                                     this.park.acordaTodas();
                                     /**
-                                     * A thread é adormecida durante 100 ms
+                                     * The thread is asleep for 100 ms
                                      */
                                     try {
                                         Thread.sleep(100);
@@ -297,17 +306,18 @@ public class Main extends Thread implements Runnable {
                                         System.out.println();
                                     }
                                     /**
-                                     * A main comunica com o semáforo (flag = 3)
+                                     * The Main class communicates with the
+                                     * Light class (flag = 3)
                                      */
                                     this.park.setFlag(this.park.COMUNICA_SEMAFORO);
                                     this.sem.release();
                                     this.park.acordaTodas();
                                 } else {
                                     /**
-                                     * Se o sistema estiver bloqueado
+                                     * If the system is locked
                                      */
                                     this.keycardButtons.blocked();
-                                    this.park.log("Sistema bloqueado(Botão: Reinicio do sistema)");
+                                    this.park.log("Locked System (Button: System Reset)");
                                 }
                                 this.park.setAction(0);
                             } catch (IOException e) {
@@ -315,24 +325,25 @@ public class Main extends Thread implements Runnable {
                             }
                             break;
                         case 6:
-                            this.park.log("Botão: Paragem do sistema");
+                            this.park.log("Button: Stop System");
                             this.keycardButtons.P();
                             /**
-                             * A thread é adormecida durante 500 ms
+                             * The thread is asleep for 500 ms
                              */
                             try {
                                 Thread.sleep(500);
                             } catch (InterruptedException ex) {
                                 System.out.println(ex.getMessage());
                             }
-                            /*
-                             * A main comunica com a cancela (flag = 2)
+                            /**
+                             * The Main class communicates with the Gate class
+                             * (flag = 2)
                              */
                             this.park.setFlag(this.park.COMUNICA_CANCELA);
                             this.sem.release();
                             this.park.acordaTodas();
                             /**
-                             * A thread é adormecida durante 100 ms
+                             * The thread is asleep for 100 ms
                              */
                             try {
                                 Thread.sleep(100);
@@ -340,16 +351,17 @@ public class Main extends Thread implements Runnable {
                                 System.out.println(ex.getMessage());
                             }
                             /**
-                             * A main comunica com o semáforo (flag = 3)
+                             * The Main class communicates with the Light class
+                             * (flag = 3)
                              */
                             this.park.setFlag(this.park.COMUNICA_SEMAFORO);
                             this.sem.release();
                             this.park.acordaTodas();
                             try {
                                 if (this.park.isBlock()) {
-                                    this.park.log("Sistema bloqueado.");
+                                    this.park.log("System locked.");
                                 } else {
-                                    this.park.log("Sistema desbloqueado.");
+                                    this.park.log("System unlocked.");
                                 }
                             } catch (IOException e) {
                                 System.out.println(e.getMessage());
@@ -361,9 +373,9 @@ public class Main extends Thread implements Runnable {
                     }
                 } else {
                     /**
-                     * Suspende a thread até que uma outra thread invoque o
-                     * método notify()(neste caso acorda()) ou notifyAll()
-                     * (neste caso acordaTodas()) desse mesmo objeto
+                     * Suspends the thread until another thread invokes the
+                     * notify() method (in this case acorda()) or notifyAll()
+                     * method (in this case acordaTodas()) of that same object
                      */
                     this.park.espera();
                 }
@@ -374,32 +386,33 @@ public class Main extends Thread implements Runnable {
     }
 
     /**
-     * Método que permite ao utilizador simular a entrada do veículo no parque
-     * incrementando o nº de lugares ocupados
+     * Method that allows the user to simulate the entry of the vehicle in the
+     * park, increasing the number of occupied places
      *
-     * @throws IOException exceção em caso de erro na escrita para o ficheiro
-     * "log"
+     * @throws IOException exception in case of error in writing to the "log"
+     * file
      */
     public void E() throws IOException {
         if (this.park.isBlock() == false) {
             if (!this.park.getGate()) {
-                JOptionPane.showMessageDialog(null, "Introduza uma chave válida!", "Informação",
+                JOptionPane.showMessageDialog(null, "Enter a valid key!", "Information",
                         JOptionPane.INFORMATION_MESSAGE);
-                this.park.log("Entrada de carro mal sucedida. É necessário abrir a cancela.");
+
+                this.park.log("Unsuccessful car entry . It is necessary to open the gate.");
             } else {
                 /**
-                 * Se parque não está cheio
+                 * If park is not full
                  */
                 if (this.park.getSlots() != this.park.MAX_SLOTS) {
                     this.park.setSlots(this.park.getSlots() + 1);
-                    this.park.getSlotsL().setText("Lugares ocupados: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS);
-                    
-                    JOptionPane.showMessageDialog(null, "Entrada do carro bem sucedida!", "Informação",
+                    this.park.getSlotsL().setText("Occupied places: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS);
+
+                    JOptionPane.showMessageDialog(null, "Car entry successful!", "Information",
                             JOptionPane.INFORMATION_MESSAGE);
-                    this.park.log("Entrada de carro.");
+                    this.park.log("Car entry.");
                 }
                 /**
-                 * Modo F
+                 * Mode C
                  */
                 if (!this.park.getMode()) {
                     try {
@@ -411,50 +424,51 @@ public class Main extends Thread implements Runnable {
                     this.park.setFlag(this.park.COMUNICA_CANCELA);
                     this.sem.release();
                     this.park.acordaTodas();
-                    this.park.log("Cancela fechada");
-                } 
+                    this.park.log("Gate closed");
+                }
                 /**
-                 * Mudar semáforo para o caso de parque ficar cheio após entrada do carro.
+                 * Change traffic light in case the parking lot becomes full
+                 * after the car entrance.
                  */
                 if (this.park.MAX_SLOTS == this.park.getSlots()) {
                     this.park.setLight(false);
                     this.park.setFlag(this.park.COMUNICA_SEMAFORO);
                     this.sem.release();
                     this.park.acordaTodas();
-                    this.park.log("Semáforo vermelho");
+                    this.park.log("Red traffic light");
                 }
             }
         }
     }
 
     /**
-     * Método que permite ao utilizador simular a saída do veículo no parque
-     * decrementando o nº de lugares ocupados
+     * Method that allows the user to simulate the car leaving the park by
+     * decreasing the number of occupied places
      *
-     * @throws IOException exceção em caso de erro na escrita para o ficheiro
-     * "log"
+     * @throws IOException exception in case of error in writing to the "log"
+     * file
      */
     public void S() throws IOException {
         /**
-         * Se programa estiver bloqueado
+         * If the system is locked
          */
         if (this.park.isBlock() == false) {
             /**
-             * Se parque estiver vazio
+             * If park is empty
              */
             if (this.park.getSlots() == 0) {
-                JOptionPane.showMessageDialog(null, "Parque vazio!", "Informação",
+                JOptionPane.showMessageDialog(null, "Empty car park!", "Information",
                         JOptionPane.INFORMATION_MESSAGE);
-                this.park.log("Saída de carro mal sucedida. Parque vazio.");
+                this.park.log("Unsuccessful car exit. Empty park.");
             } else {
                 /**
-                 * Modo A
+                 * Mode O
                  */
                 if (this.park.getMode()) {
                     this.park.setSlots(this.park.getSlots() - 1);
-                    this.park.getSlotsL().setText("Lugares ocupados: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS);
+                    this.park.getSlotsL().setText("Occupied places: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS);
                     /**
-                     * Se parque estava cheio, muda semáforo
+                     * If park was full, change traffic light
                      */
                     if (this.park.getSlots() + 1 == this.park.MAX_SLOTS) {
                         this.park.setLight(true);
@@ -462,13 +476,12 @@ public class Main extends Thread implements Runnable {
                         this.sem.release();
                         this.park.acordaTodas();
                     }
-                    JOptionPane.showMessageDialog(null, "Saída do carro bem sucedida!", "Informação",
+                    JOptionPane.showMessageDialog(null, "Successful car exit!", "Information",
                             JOptionPane.INFORMATION_MESSAGE);
-                    this.park.log("Saída de carro.");
-                }
-                /**
-                 * Modo F
-                 */ 
+                    this.park.log("Car exit.");
+                } /**
+                 * Mode C
+                 */
                 else {
                     try {
                         Thread.sleep(500);
@@ -476,24 +489,24 @@ public class Main extends Thread implements Runnable {
                         System.out.println(ex.getMessage());
                     }
                     this.park.setGate(true);
-                    /*
-                     * A main comunica com a cancela (flag = 2)
+                    /**
+                     * The Main class communicates with the Gate class (flag= 2)
                      */
                     this.park.setFlag(this.park.COMUNICA_CANCELA);
                     this.sem.release();
                     this.park.acordaTodas();
-                    this.park.log("Cancela aberta");
+                    this.park.log("Gate opened");
                     this.park.setSlots(this.park.getSlots() - 1);
-                    this.park.getSlotsL().setText("Lugares ocupados: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS);
+                    this.park.getSlotsL().setText("Occupied places: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS);
                     if (this.park.getSlots() + 1 == this.park.MAX_SLOTS) {
                         this.park.setLight(true);
                         this.park.setFlag(this.park.COMUNICA_SEMAFORO);
                         this.sem.release();
                         this.park.acordaTodas();
                     }
-                    JOptionPane.showMessageDialog(null, "Saída do carro bem sucedida!", "Informação",
+                    JOptionPane.showMessageDialog(null, "Successful car exit!", "Information",
                             JOptionPane.INFORMATION_MESSAGE);
-                    this.park.log("Saída de carro.");
+                    this.park.log("Car exit.");
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException ex) {
@@ -501,21 +514,20 @@ public class Main extends Thread implements Runnable {
                     }
                     this.park.setGate(false);
                     /*
-                     * A main comunica com a cancela (flag = 2)
+                     * The Main class communicates with the Gate class (flag= 2)
                      */
                     this.park.setFlag(this.park.COMUNICA_CANCELA);
                     this.sem.release();
                     this.park.acordaTodas();
-                    this.park.log("Cancela fechada");
+                    this.park.log("Gate closed");
                 }
             }
         }
     }
 
     /**
-     * Método responsável por escrever para o ficheiro de configuração (config)
-     * o nº de lugares atualmente ocupados e as chaves válidas de acesso ao
-     * parque
+     * Method responsible for writing to the configuration file (config) the
+     * number of places currently occupied and the valid keys to access the park
      */
     private void write() throws IOException {
         Charset ENCODING = StandardCharsets.UTF_8;
@@ -526,13 +538,13 @@ public class Main extends Thread implements Runnable {
             linhas.add("key=\"" + this.park.getKey(i) + "\"");
         }
         Files.write(path, linhas, ENCODING);
-        this.park.log("Configurações guardadas.");
+        this.park.log("Saved configurations.");
     }
 
     /**
-     * Método responsável por carregar as informações do ficheiro de
-     * configuração (config) para o programa e responsável também por apresentar
-     * uma janela com as informações carregadas quando o programa é iniciado
+     * Method responsible for loading the information from the configuration
+     * file (config) to the program and also responsible for displaying a window
+     * with the information loaded when the program is started
      */
     private void load(Park park) throws IOException {
         Charset ENCODING = StandardCharsets.UTF_8;
@@ -570,15 +582,15 @@ public class Main extends Thread implements Runnable {
             park.setLight(true);
         }
 
-        park.setDialogF(new JFrame("Carregar..."));
+        park.setDialogF(new JFrame("Loading..."));
         park.getDialogF().setResizable(false);
         JPanel fields1 = new JPanel();
         JPanel fields2 = new JPanel();
 
         fields2.add(park.getOkB());
         fields1.setLayout(new BoxLayout(fields1, BoxLayout.Y_AXIS));
-        fields1.add(new JLabel("Lugares ocupados: " + park.getSlots() + "/" + park.MAX_SLOTS));
-        fields1.add(new JLabel("Chaves carregadas: " + park.getKeys().length));
+        fields1.add(new JLabel("Occupied places: " + park.getSlots() + "/" + park.MAX_SLOTS));
+        fields1.add(new JLabel("Keys loaded: " + park.getKeys().length));
 
         park.getDialogF().getContentPane().add(fields1, BorderLayout.CENTER);
         park.getDialogF().getContentPane().add(fields2, BorderLayout.SOUTH);
@@ -589,7 +601,7 @@ public class Main extends Thread implements Runnable {
         park.getDialogF().setVisible(true);
 
         park.getOkB().addActionListener(park);
-        this.park.log("Configurações carregadas.");
+        this.park.log("Configurations loaded.");
     }
 
     public static void main(String args[]) {

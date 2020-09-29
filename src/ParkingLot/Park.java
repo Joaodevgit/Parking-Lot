@@ -1,3 +1,5 @@
+package ParkingLot;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,12 +15,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
+/**
+ * @author João Pereira
+ * @author Francisco Spínola
+ */
 public class Park implements ActionListener {
 
     /**
-     * Terminologia das variáveis
+     * Terminology of variables
      *
-     * VAR: Constante ,var: variável normal, varL: Label, varF: Frame varB:
+     * VAR: Constant, var: normal variable, varL: Label, varF: Frame varB:
      * Button
      */
     public final int MAX_SLOTS = 50;
@@ -27,12 +33,12 @@ public class Park implements ActionListener {
     public final int COMUNICA_SEMAFORO = 3;
 
     /**
-        true = A (Cancela sempre aberta)
-        false = F (Cancela abre e/ou fecha dependendo das funcionalidades de cada método)
-    */
+     * true = O (Gate always open) false = C (Gate opens and / or closes
+     * depending on the functionality of each method)
+     */
     private boolean mode;
 
-    /* Variáveis regulares */
+    /* Regular variables */
     private int slots;
     private int action;
     private boolean insertedKey;
@@ -43,7 +49,7 @@ public class Park implements ActionListener {
     private int flag;
     private String codeKey;
 
-    /* Variáveis gráficas */
+    /* Graphical variables */
     private JFrame dialogF;
     private JLabel slotsL;
     private JLabel modeL;
@@ -51,7 +57,7 @@ public class Park implements ActionListener {
     private JButton okB;
 
     /**
-     * Método construtor park
+     * Park constructor method
      */
     public Park() {
         this.insertedKey = false;
@@ -66,317 +72,316 @@ public class Park implements ActionListener {
     }
 
     /**
-     * Método responsável por alterar a Label que representa o Modo da cancela
+     * Method responsible for changing the Label that represents the Gate Mode
      *
-     * @param label que representa o Modo da cancela
+     * @param label representing the Gate Mode
      */
     public void setModeL(JLabel label) {
         this.modeL = label;
     }
 
     /**
-     * Método responsável por retornar a Label que representa o Modo da cancela
+     * Method responsible for returning the Label that represents the Gate Mode
      *
-     * @return Label que representa o Modo da cancela
+     * @return Label representing the Gate Mode
      */
-    public JLabel getModeL () {
+    public JLabel getModeL() {
         return this.modeL;
     }
 
     /**
-     * Método responsável por retornar o Modo da cancela
+     * Method responsible for returning the gate mode
      *
-     * @return Modo da cancela
+     * @return Gate mode
      */
     public synchronized boolean getMode() {
         return this.mode;
     }
 
     /**
-     * Método responsável por alterar o Modo da cancela
+     * Method responsible for changing the Gate Mode
      */
     public synchronized void changeMode() {
         this.mode = !this.mode;
-        if (this.mode && !this.gate)
+        if (this.mode && !this.gate) {
             this.gate = true;
-        else if (!this.mode && this.gate)
+        } else if (!this.mode && this.gate) {
             this.gate = false;
+        }
     }
 
     /**
-     * Método responsável por retornar o botão de exit
+     * Method responsible for returning the exit button
      *
-     * @return o botão de exit
+     * @return the exit button
      */
     public JButton getExitB() {
         return this.exitB;
     }
 
     /**
-     * Método responsável por definir o botão de exit
+     * Method responsible for defining the exit button
      *
-     * @param exitB o botão de exit
+     * @param exitB the exit button
      */
     public void setExitB(JButton exitB) {
         this.exitB = exitB;
     }
 
     /**
-     * Método responsável por retornar o botão ok
+     * Method responsible for returning the ok button
      *
-     * @return o botão ok
+     * @return the button ok
      */
     public JButton getOkB() {
         return this.okB;
     }
 
     /**
-     * Método responsável por retornar a frame de dialog
+     * Method responsible for returning the dialog frame
      *
-     * @return a frame de dialog
+     * @return a dialog frame
      */
     public JFrame getDialogF() {
         return this.dialogF;
     }
 
     /**
-     * Método responsável por definir a frame de dialog
+     * Method responsible for defining the dialog frame
      *
-     * @param dialogF a frame de dialog
+     * @param dialogF a dialog frame
      */
     public void setDialogF(JFrame dialogF) {
         this.dialogF = dialogF;
     }
 
     /**
-     * Método responsável por retornar a label de slots
+     * Method responsible for returning the slot label
      *
-     * @return a label de slots
+     * @return the slots label
      */
     public JLabel getSlotsL() {
         return this.slotsL;
     }
 
     /**
-     * Método responsável por definir a label de slots
+     * Method responsible for defining the slot label
      *
-     * @param slotsL a label de slots
+     * @param slotsL the slots label
      */
     public void setSlotsL(JLabel slotsL) {
         this.slotsL = slotsL;
     }
 
     /**
-     * Método responsável por retornar o código da chave introduzido pelo
-     * utilizador
+     * Method responsible for returning the key code entered by the user
      *
-     * @return o código da chave
+     * @return the key code
      */
     public String getCodeKey() {
         return codeKey;
     }
 
     /**
-     * Método responsável por definir o código da chave introduzido pelo
-     * utilizador
+     * Method responsible for setting the key code entered by the user
      *
-     * @param codeKey O código da chave
+     * @param codeKey the key code
      */
     public void setCodeKey(String codeKey) {
         this.codeKey = codeKey;
     }
 
     /**
-     * Método responsável por retornar o número da flag
+     * Method responsible for returning the flag number
      *
-     * @return o número da flag
+     * @return the flag number
      */
-    public synchronized int getFlag() { // nova variável
+    public synchronized int getFlag() {
         return flag;
     }
 
     /**
-     * Método responsável por definir o numero da flag
+     * Method responsible for setting the flag number
      *
-     * @param flag O numero de Flag
+     * @param flag the flag number
      */
-    public synchronized void setFlag(int flag) { // nova variável
+    public synchronized void setFlag(int flag) {
         this.flag = flag;
     }
 
     /**
-     * Método responsável por definir o número da ação , ou seja , cada botão
-     * corresponde a determinado número da ação
+     * Method responsible for defining the action number, that is, each button
+     * corresponds to a specific action number
      *
-     * @param action o número da ação
+     * @param action the action number
      */
     public synchronized void setAction(int action) {
         this.action = action;
     }
 
     /**
-     * Método responsável por retornar o número da ação , ou seja , cada botão
-     * corresponde a determinado número da ação
+     * Method responsible for returning the action number, that is, each button
+     * corresponds to a specific action number
      *
-     * @return o número da ação
+     * @return the action number
      */
     public synchronized int getAction() {
         return this.action;
     }
 
     /**
-     * Método responsável por retornar o estado da introdução da chave true -
-     * foi introduzida; false - não foi introduzida
+     * Method responsible for returning the status of the key introduction true
+     * - was introduced; false - not entered
      *
-     * @return estado da introdução da chave
+     * @return key introduction status
      */
     public synchronized boolean isInsertedKey() {
         return insertedKey;
     }
 
     /**
-     * Método responsável por definir se a chave foi introduzida ou não true -
-     * foi introduzida; false - não foi introduzida
+     * Method responsible for defining whether the key was introduced or not
+     * true - it was introduced; false - not entered Método responsável por
      *
-     * @param insertedKey estado da introdução da chave
+     * @param insertedKey key introduction status
      */
     public synchronized void setInsertedKey(boolean insertedKey) {
         this.insertedKey = insertedKey;
     }
 
     /**
-     * Método responsável por retornar o estado do sistema true - bloqueado;
-     * false - desbloqueado
+     * Method responsible for returning the system state true - locked; false -
+     * unlocked
      *
-     * @return estado do sistema
+     * @return system state
      */
     public synchronized boolean isBlock() {
         return block;
     }
 
     /**
-     * Método responsável por definir o estado do sistema true - bloqueado;
-     * false - desbloqueado
+     * Method responsible for setting the system state true - blocked; false -
+     * unlocked
      *
-     * @param block estado do sistema
+     * @param block system state
      */
     public synchronized void setBlock(boolean block) {
         this.block = block;
     }
 
     /**
-     * Método responsável por retornar número de lugares ocupados no parque de
-     * estacionamento
+     * Method responsible for returning the number of occupied places in the car
+     * park
      *
-     * @return número de lugares ocupados no parque de estacionamento
+     * @return number of occupied places in the car park
      */
     public synchronized int getSlots() {
         return this.slots;
     }
 
     /**
-     * Método responsável por definir o número de lugares ocupados no parque de
-     * estacionamento
+     * Method responsible for defining the number of occupied places in the car
+     * park
      *
-     * @param slots número de lugares ocupados no parque de estacionamento
+     * @param slots number of occupied spaces in the car park
      */
     public synchronized void setSlots(int slots) {
         this.slots = slots;
     }
 
     /**
-     * Método responsável por retornar o estado da cancela true - aberta; false
-     * - fechada
+     * Method responsible for returning the status of the gate true - open;
+     * false- closed
      *
-     * @return estado da cancela
+     * @return gate status
      */
     public synchronized boolean getGate() {
         return this.gate;
     }
 
     /**
-     * Método responsável por definir o estado da cancela true - aberta; false -
-     * fechada
+     * Method responsible for setting the status of the gate true - open; false
+     * -close
      *
-     * @param gate estado da cancela
+     * @param gate gate status
      */
     public synchronized void setGate(boolean gate) {
         this.gate = gate;
     }
 
     /**
-     * Método responsável por retornar o estado do semáforo true - verde; false
-     * - vermelho
+     * Method responsible for returning the state of the traffic light true -
+     * green; false- red
      *
-     * @return estado do semáforo
+     * @return traffic light state
      */
     public synchronized boolean getLight() {
         return this.light;
     }
 
     /**
-     * Método responsável por definir o estado do semáforo
+     * Method responsible for defining the traffic light state
      *
-     * @param light estado do semáforo
+     * @param light traffic light state
      */
     public synchronized void setLight(boolean light) {
         this.light = light;
     }
 
     /**
-     * Método responsável por retornar um array de chaves válidas
+     * Method responsible for returning an array of valid keys
      *
-     * @return array de chaves válidas
+     * @return array of valid keys
      */
     public synchronized String[] getKeys() {
         return this.keys;
     }
 
     /**
-     * Método responsável por definir o array de chaves válidas
+     * Method responsible for defining the array of valid keys
      *
-     * @param keys array de chaves válidas
+     * @param keys array of valid keys
      */
     public synchronized void setKeys(String[] keys) {
         this.keys = keys;
     }
 
     /**
-     * Método responsável por retornar a chave no array de chaves válidas
+     * Method responsible for returning the key in the array of valid keys
      *
-     * @param index indice da chave válida que se pretende obter
-     * @return chave válida na posição pretendida
+     * @param index index of the valid key to be obtained
+     * @return valid key in the pretended position
      */
     public synchronized String getKey(int index) {
         return this.keys[index];
     }
 
     /**
-     * Método responsável por definir a chave no array de chaves
+     * Method responsible for defining the key in the key array
      *
-     * @param key chave a ser definida
-     * @param index indice da chave que se pretende definir
+     * @param key key to be defined
+     * @param index key index to be defined
      */
     public synchronized void setKey(String key, int index) {
         this.keys[index] = key;
     }
 
     /**
-     * Método responsável por acordar várias threads em espera
+     * Method responsible for waking up multiple waiting threads
      */
     public synchronized void acordaTodas() {
         this.notifyAll();
     }
 
     /**
-     * Método responsável por acordar uma thread em espera
+     * Method responsible for waking up a waiting thread
      */
     public synchronized void acorda() {
         this.notify();
     }
 
     /**
-     * Método responsável por suspendar uma thread
+     * Method responsible for suspending a thread
      */
     public synchronized void espera() {
         try {
@@ -387,30 +392,28 @@ public class Park implements ActionListener {
     }
 
     /**
-     * Método responsável por validar a chave introduzida pelo utilizador
+     * Method responsible for validating the key entered by the user
      *
-     * @param key chave a ser validada
-     * @return sucesso/insucesso da operação
+     * @param key key to be validated
      */
     public void verifyKey(String key) {
         if (key.length() == 4 && key.matches("[0-9]+")) {
             try {
                 /**
-                 * Mensagem de informação que será exibida durante 1.5s a dizer
-                 * ao utilizador que a chave se encontra em processo de
-                 * validação
+                 * Information message that will be displayed for 1.5s telling
+                 * the user that the key is in the process of validation
                  */
-                JOptionPane optionPane = new JOptionPane("A verificar chave...", JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane optionPane = new JOptionPane("Checking key...", JOptionPane.INFORMATION_MESSAGE,
                         JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
                 JDialog dialog = new JDialog();
-                dialog.setTitle("Verificação da chave");
+                dialog.setTitle("Key verification");
                 dialog.setModal(true);
                 dialog.setContentPane(optionPane);
                 dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
                 dialog.setLocationRelativeTo(null);
                 dialog.pack();
                 /**
-                 * Temporizador de duração 1.5s para a caixa de diálogo
+                 * 1.5s duration timer for dialog
                  */
                 Timer timer = new Timer(1500, new AbstractAction() {
                     @Override
@@ -420,7 +423,7 @@ public class Park implements ActionListener {
                 });
                 timer.setRepeats(false);
                 /**
-                 * Começa o temporizador da caixa de diálogo
+                 * Dialog timer starts
                  */
                 timer.start();
                 dialog.setVisible(true);
@@ -430,16 +433,16 @@ public class Park implements ActionListener {
                 }
                 if (i == this.keys.length) {
                     /**
-                     * Mensagem de erro a dizer ao utilizador que a chave que
-                     * introduziu não se encontra presente no ficheiro "config"
+                     * Error message telling the user that the key he entered
+                     * does not exist in the "config" file
                      */
-                    JOptionPane.showMessageDialog(null, "Chave não encontrada", "Erro",
+                    JOptionPane.showMessageDialog(null, "Key not found", "Error",
                             JOptionPane.ERROR_MESSAGE);
-                    this.log("Chave inserida não encontrada.");
+                    this.log("Inserted key not found.");
                 } else {
                     if (this.slots < this.MAX_SLOTS) {
                         /**
-                         * Modo F
+                         * Mode C
                          */
                         if (!this.mode) {
                             try {
@@ -450,21 +453,20 @@ public class Park implements ActionListener {
                             this.gate = true;
                         }
                         /**
-                         * Mensagem de informação a dizer ao utilizador que a
-                         * chave que introduziu é válida e que pode aceder ao
-                         * parque de estacionamento
+                         * Information message telling the user that the key he
+                         * entered is valid and that he can access the car park
                          */
-                        JOptionPane.showMessageDialog(null, "Chave válida acesso concedido!", "Informação",
+                        JOptionPane.showMessageDialog(null, "Valid key access granted!", "Information",
                                 JOptionPane.INFORMATION_MESSAGE);
-                        this.log("Chave válida. Acesso concedido!");
+                        this.log("Valid key. Access granted!");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Parque cheio!", "Informação",
+                        JOptionPane.showMessageDialog(null, "Park full!", "Information",
                                 JOptionPane.INFORMATION_MESSAGE);
-                        this.log("Chave válida. Parque cheio!");
+                        this.log("Valid key. Park full!");
                     }
-                    
+
                     /**
-                     * Caso a chave introduzida pelo utilizador seja válida
+                     * If the key entered by the user is valid
                      */
                     this.insertedKey = true;
                 }
@@ -473,26 +475,27 @@ public class Park implements ActionListener {
             }
         } else {
             /**
-             * Mensagem de erro a dizer ao utilizador que a chave que introduziu
-             * possui um formato inválido
+             * Error message telling the user that the key he entered has an
+             * invalid format
              */
-            JOptionPane.showMessageDialog(null, "Formato da chave inválido acesso negado!",
-                    "Inválida", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Invalid key format access denied!",
+                    "Invalid Key", JOptionPane.ERROR_MESSAGE);
             try {
-                this.log("Formato da chave inválido acesso negado!");
-            } catch (IOException ex) {}
+                this.log("Invalid key format access denied!");
+            } catch (IOException ex) {
+            }
         }
         try {
-            this.log("Chave verificada");
-        } catch (IOException ex) {}
+            this.log("Verified key");
+        } catch (IOException ex) {
+        }
     }
 
     /**
-     * Método responsável por guardar registos de atividade da aplicação para
-     * ficheiro
+     * Method responsible for saving program activity records to file
      *
-     * @param message mensagem de registo de atividade a ser guardada
-     * @throws IOException exceção lançada caso a escrita para ficheiro falhe
+     * @param message activity log message to be saved
+     * @throws IOException exception thrown if writing to file fails
      */
     public void log(String message) throws IOException {
         File file = new File("log.txt");
@@ -504,21 +507,21 @@ public class Park implements ActionListener {
     }
 
     /**
-     * Método responsável por fechar as caixas de diálogo que vão aparecendo e
-     * que possuem o botão "ok" para fechar só essa janela e o botão "fechar"
-     * para fechar o programa
+     * Method responsible for closing the dialog boxes that appear and that have
+     * the "ok" button to close only that window and the "close" button to close
+     * the program
      *
-     * @param ev evento recebido
+     * @param ev event received
      */
     @Override
     public void actionPerformed(ActionEvent ev) {
         /**
-         * Se o sistema não estiver bloqueado
+         * If the system is not locked
          */
         if (!this.isBlock()) {
             if (ev.getSource() == this.exitB) {
                 try {
-                    this.log("Programa fechado.\n");
+                    this.log("Program closed.\n");
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
@@ -529,15 +532,14 @@ public class Park implements ActionListener {
             }
         } else {
             /**
-             * Mensagem de aviso a dizer ao utilizador que a chave que o sistema
-             * se encontra bloqueado
+             * Warning message telling the user that the system is locked
              */
-            JOptionPane.showMessageDialog(null, "Sistema bloqueado!", "Aviso",
+            JOptionPane.showMessageDialog(null, "System locked!", "Warning",
                     JOptionPane.WARNING_MESSAGE);
             try {
-                this.log("Sistema bloqueado. Introdução da chave cancelada.");
+                this.log("System locked. Key entered canceled.");
             } catch (IOException ex) {
-                System.out.println("ERRO");
+                System.out.println("ERROR");
             }
         }
     }

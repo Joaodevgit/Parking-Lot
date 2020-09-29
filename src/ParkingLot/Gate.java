@@ -1,10 +1,12 @@
+package ParkingLot;
+
 import java.util.concurrent.Semaphore;
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author João Pereira Número: 8170202 Turma:LEI2T1
- * @author Francisco Spínola Número:8180140 Turma:LSIRC2T1
+ * @author João Pereira 
+ * @author Francisco Spínola 
  */
 public class Gate extends Thread {
 
@@ -12,10 +14,10 @@ public class Gate extends Thread {
     private Semaphore sem;
 
     /**
-     * Método Construtor da classe Gate
+     * Constructor Method of Gate Class
      *
-     * @param park Objeto que irá ser partilhado por todos
-     * @param sem Semáforo que irá ser partilhado por todos
+     * @param park Object that will be shared by all classes
+     * @param sem Semaphore that will be shared by all classes
      */
     public Gate(Park park, Semaphore sem) {
         this.park = park;
@@ -23,9 +25,8 @@ public class Gate extends Thread {
     }
 
     /**
-     * Método run() que irá ficar responsável pela abertura da janela que irá
-     * conter uma imagem de uma cancela e irá ficar encarregue de atualizar a
-     * cancela
+     * Method that will be responsible for opening the window that will 
+     * contain an image of a gate and will be in charge of updating the gate
      */
     @Override
     public void run() {
@@ -48,9 +49,10 @@ public class Gate extends Thread {
 
         while (true) {
             /**
-             * Caso o valor da flag ,definido na main,seja igual a 2, irá entrar
-             * neste "if" onde o semáforo irá dar acquire (remoção do nº de
-             * autorizações) e irá atribuir o valor 0 à variável flag
+             * If the value of the variable "flag"(defined in the Main class) is
+             * equal to 2, it will enter on this "if" where the variable sem will use the 
+             * method acquire() (removal of the number of authorizations) and will assign 
+             * the value 0 to the flag variable
              */
             if (this.park.getFlag() == this.park.COMUNICA_CANCELA) {
                 try {
@@ -60,8 +62,8 @@ public class Gate extends Thread {
                     System.out.println(ex.getMessage());
                 }
                 /**
-                 * Alteração da cancela em função do seu estado: true (cancela
-                 * irá-se abrir) ou false (cancela irá-se fechar)
+                 * Change of the gate according to its status: true (the gate 
+                 * will open) or false (the gate will close)
                  */
                 if (this.park.getGate()) {
                     gateL.setIcon(new ImageIcon("Gate_Opened.jpg"));
@@ -70,10 +72,10 @@ public class Gate extends Thread {
                 }
             } else {
                 /**
-                 * Suspende a thread até que uma outra thread invoque o método
-                 * notify()(neste caso acorda()) ou notifyAll() (neste caso
-                 * acordaTodas()) desse mesmo objeto (quando um botão é
-                 * pressionado na classe Keycard)
+                 * Suspend the thread until another thread invokes the notify()
+                 * method (in this case acorda()) or notifyAll() method (in this case 
+                 * acordaTodas()) of that same object (when a button is pressed 
+                 * in the Keycard class)
                  */
                 this.park.espera();
             }

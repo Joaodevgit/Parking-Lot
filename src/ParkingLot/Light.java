@@ -1,10 +1,12 @@
+package ParkingLot;
+
 import java.util.concurrent.Semaphore;
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author João Pereira Número: 8170202 Turma:LEI2T1
- * @author Francisco Spínola Número:8180140 Turma:LSIRC2T1
+ * @author João Pereira
+ * @author Francisco Spínola
  */
 public class Light extends Thread {
 
@@ -12,10 +14,10 @@ public class Light extends Thread {
     private Park park;
 
     /**
-     * Método Construtor da classe Light
+     * Constructor Method of Light Class
      *
-     * @param park Objeto que irá ser partilhado por todos
-     * @param sem Semáforo que irá ser partilhado por todos
+     * @param park Object that will be shared by all classes
+     * @param sem Semaphore that will be shared by all classes
      */
     public Light(Park park, Semaphore sem) {
         this.park = park;
@@ -23,13 +25,13 @@ public class Light extends Thread {
     }
 
     /**
-     * Método run() que irá ficar responsável pela abertura da janela "Semáforo"
-     * que irá conter uma imagem de um semáforo e irá ficar encarregue de
-     * atualizar a cor do semáforo
+     * Method that will be responsible for opening the "Traffic Light" window
+     * that will contain an image of a traffic light and will be in charge of
+     * updating the traffic light color
      */
     @Override
     public void run() {
-        JFrame lightF = new JFrame("Semáforo");
+        JFrame lightF = new JFrame("Traffic Light");
         lightF.setUndecorated(true);
         JPanel panel1 = new JPanel();
         JLabel lightL;
@@ -41,13 +43,14 @@ public class Light extends Thread {
         panel1.add(lightL);
         lightF.getContentPane().add(panel1, BorderLayout.CENTER);
         lightF.pack();
-        lightF.setLocation(1100,50);
+        lightF.setLocation(1100, 50);
         lightF.setVisible(true);
         while (true) {
             /**
-             * Caso o valor da flag ,definido na main,seja igual a 3, irá entrar
-             * neste "if" onde o semáforo irá dar acquire (remoção do nº de
-             * autorizações) e irá atribuir o valor 0 à variável flag
+             * If the value of the flag (defined in the Main class) is equal to 3, it 
+             * will enter on this "if" where the variable sem will use the method
+             * acquire() (removal of the number of authorizations) and will 
+             * assign the value 0 to the flag variable
              */
             if (this.park.getFlag() == this.park.COMUNICA_SEMAFORO) {
                 try {
@@ -57,8 +60,9 @@ public class Light extends Thread {
                     System.out.println(ex.getMessage());
                 }
                 /**
-                 * Alteração da cor do semáforo em função do seu estado: true
-                 * (semáforo com cor verde) ou false (semáforo com cor vermelha)
+                 * Traffic light color change depending on its status: true 
+                 * (traffic light with green color) or false (traffic light 
+                 * with red color)
                  */
                 if (this.park.getLight()) {
                     lightL.setIcon(new ImageIcon("Green_Light.jpg"));
@@ -67,10 +71,10 @@ public class Light extends Thread {
                 }
             } else {
                 /**
-                 * Deixa a thread em suspensão até que uma outra thread invoque
-                 * o método notify()(neste caso acorda()) ou notifyAll() (neste
-                 * caso acordaTodas()) desse mesmo objeto (quando um botão é
-                 * pressionado na classe Keycard)
+                 * Leave the thread in suspension until another thread invokes 
+                 * the notify() (in this case acorda()) or notifyAll() method 
+                 * (in this case acordaTodas()) of that same object (when a button
+                 * is pressed in the Keycard class)
                  */
                 this.park.espera();
             }

@@ -1,3 +1,5 @@
+package ParkingLot;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,15 +8,15 @@ import java.io.*;
 import java.util.concurrent.Semaphore;
 
 /**
- * @author João Pereira Número: 8170202 Turma:LEI2T1
- * @author Francisco Spínola Número:8180140 Turma:LSIRC2T1
+ * @author João Pereira
+ * @author Francisco Spínola
  */
 public class KeyCardButtons extends Thread implements ActionListener {
 
     private Park park;
     private Semaphore sem;
     /**
-     * Variáveis para os botões
+     * Button Variables
      */
     private JButton card;
     private JButton in;
@@ -23,43 +25,43 @@ public class KeyCardButtons extends Thread implements ActionListener {
     private JButton reset;
     private JButton stop;
     /**
-     * Variáveis para os painéis
+     * Panel Variables
      */
     private JPanel primary;
     private JPanel secondary;
     /**
-     * Variável para a frame
+     * Frame Variables
      */
     private JFrame frame;
 
     /**
-     * Método construtor da classe KeyCardButtons (Cartão/Chave)
+     * Constructor Method of KeyCardButtons Class
      *
-     * @param park Objeto que irá ser partilhado por todos
-     * @param sem Semáforo que irá ser partilhado por todos
+     * @param park Object that will be shared by all classes
+     * @param sem Semaphore that will be shared by all classes
      */
     public KeyCardButtons(Park park, Semaphore sem) {
         this.park = park;
         this.sem = sem;
         /**
-         * Paineis
+         * Panels
          */
         this.primary = new JPanel(new GridLayout(0, 1));
         this.secondary = new JPanel(new GridLayout(0, 1));
         /**
-         * Frame
+         * Frames
          */
         this.frame = new JFrame("Botões");
         this.frame.setUndecorated(true);
         /**
-         * Instanciação/Criação dos botões do parque de estacionamento
+         * Instantiation / Creation of parking lot buttons
          */
-        this.card = new JButton("Cartão/Chave (C)");
-        this.in = new JButton("Entrada do veículo (E)");
-        this.out = new JButton("Saída do veículo (S)");
-        this.gate = new JButton("Abrir/Fechar Cancela (A/F)");
-        this.reset = new JButton("Reinício do sistema (R)");
-        this.stop = new JButton("Paragem do sistema (P)");
+        this.card = new JButton("Enter Keycard Code (C)");
+        this.in = new JButton("Car Entrance (E)");
+        this.out = new JButton("Car Exit (Ex)");
+        this.gate = new JButton("Open/Close Gate (O/C)");
+        this.reset = new JButton("Reset System (R)");
+        this.stop = new JButton("Stop System (S)");
     }
 
     @Override
@@ -91,66 +93,65 @@ public class KeyCardButtons extends Thread implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ev) {
         /**
-         * Quando o utilizador carrega no botão "C" para introduzir os dados do
-         * cartão para acesso ao parque de estacionamento
+         * When the user presses the "C" button to enter the data of the card
+         * for access to the car park
          */
         if (ev.getSource() == this.card) {
             this.park.setFlag(this.park.COMUNICA_MAIN);
             this.park.setAction(1);
-            this.sem.release(); // Aumenta o nº de autorizações do semáforo
-            this.park.acordaTodas(); // Desperta todas as threads suspensas no objeto
+            this.sem.release(); // Increase the number of semaphore authorizations
+            this.park.acordaTodas(); // Awakens all threads suspended on the object
             /**
-             * Quando o utilizador carrega no botão "E" de modo a simular a
-             * entrada do carro no parque de estacionamento
+             * When the user presses the "E" button to simulate the car entering
+             * the parking lot
              */
         } else if (ev.getSource() == this.in) {
             this.park.setFlag(this.park.COMUNICA_MAIN);
             this.park.setAction(2);
-            this.sem.release(); // Aumenta o nº de autorizações do semáforo
-            this.park.acordaTodas(); // Desperta todas as threads suspensas no objeto
+            this.sem.release(); // Increase the number of semaphore authorizations
+            this.park.acordaTodas(); // Awakens all threads suspended on the object
             /**
-             * Quando o utilizador carrega no botão "S" de modo a simular a
-             * saída do carro no parque de estacionamento
+             * When the user presses the "S" button in order to simulate the car
+             * leaving the car park
              */
         } else if (ev.getSource() == this.out) {
             this.park.setFlag(this.park.COMUNICA_MAIN);
             this.park.setAction(3);
-            this.sem.release(); // Aumenta o nº de autorizações do semáforo
-            this.park.acordaTodas(); // Desperta todas as threads suspensas no objeto;
+            this.sem.release(); // Increase the number of semaphore authorizations
+            this.park.acordaTodas(); // Awakens all threads suspended on the object
             /**
-             * Quando o utilizador carrega no botão "A/F" de modo a interagir
-             * com a cancela do parque de estacionamento
+             * When the user presses the "A / F" button in order to interact
+             * with the car park gate
              */
         } else if (ev.getSource() == this.gate) {
             this.park.setFlag(this.park.COMUNICA_MAIN);
             this.park.setAction(4);
-            this.sem.release(); // Aumenta o nº de autorizações do semáforo
-            this.park.acordaTodas(); // Desperta todas as threads suspensas no objeto
+            this.sem.release(); // Increase the number of semaphore authorizations
+            this.park.acordaTodas(); // Awakens all threads suspended on the object
             /**
-             * Quando o utilizador carrega no botão "R" de modo a simular o
-             * reínicio do sistema do parque de estacionamento
+             * When the user presses the "R" button in order to simulate the
+             * restart of the car park system
              */
         } else if (ev.getSource() == this.reset) {
             this.park.setFlag(this.park.COMUNICA_MAIN);
             this.park.setAction(5);
-            this.sem.release(); // Aumenta o nº de autorizações do semáforo
-            this.park.acordaTodas(); // Desperta todas as threads suspensas no objeto
+            this.sem.release(); // Increase the number of semaphore authorizations
+            this.park.acordaTodas(); // Awakens all threads suspended on the object
             /**
-             * Quando o utilizador carrega no botão "P" de modo a simular o
-             * paragem imediata do funcionamento do sistema do parque de
-             * estacionamento
+             * When the user presses the "P" button in order to simulate the
+             * immediate stop of the car park system operation
              */
         } else if (ev.getSource() == this.stop) {
             this.park.setFlag(this.park.COMUNICA_MAIN);
             this.park.setAction(6);
-            this.sem.release(); // Aumenta o nº de autorizações do semáforo
-            this.park.acordaTodas(); // Desperta todas as threads suspensas no objeto
+            this.sem.release(); // Increase the number of semaphore authorizations
+            this.park.acordaTodas(); // Awakens all threads suspended on the object
         } else {
             /**
-             * Suspende a thread até que uma outra thread invoque o método
-             * notify()(neste caso acorda()) ou notifyAll() (neste caso
-             * acordaTodas()) desse mesmo objeto (quando um botão é pressionado
-             * nesta classe)
+             * Suspend the thread until another thread invokes the notify()
+             * method (in this case it acorda()) or notifyAll() method (in this
+             * case it acordaTodas()) of that same object (when a button is
+             * pressed in this class)
              */
             this.park.espera();
         }
@@ -158,72 +159,71 @@ public class KeyCardButtons extends Thread implements ActionListener {
     }
 
     /**
-     * Método responsável por permitir que o utilizador não consiga interagir
-     * com o sistema , lançando uma caixa de diálogo ("Sistema bloqueado!") cada
-     * vez que o utilizador tente interagir com o sistema
+     * Method responsible for allowing the user to not be able to interact with
+     * the system, launching a dialog box ("System locked!") Every time the user
+     * tries to interact with the system
      */
     public void blocked() {
-        JOptionPane.showMessageDialog(null, "Sistema bloqueado!", "Aviso",
+        JOptionPane.showMessageDialog(null, "System locked!", "Warning",
                 JOptionPane.WARNING_MESSAGE);
     }
 
     /**
-     * Método por permitir ao utilizador introduzir um número de 4 dígitos (abre
-     * uma janela onde o utilizador introduz o código)
+     * Method for allowing the user to enter a 4-digit number (opens a window
+     * where the user enters the code)
      *
-     * @throws java.io.IOException exceção em caso de erro na escrita para o
-     * ficheiro "config"
+     * @throws java.io.IOException exception in case of error in writing to the
+     * "config" file
      */
     public void C() throws IOException {
         if (this.park.isBlock() == false) {
-            
-            String keyInput = JOptionPane.showInputDialog(null, "Chave (4 Dígitos):");
+
+            String keyInput = JOptionPane.showInputDialog(null, "Key (4 Digits):");
             if (keyInput == null) {
                 keyInput = "";
             }
             this.park.setCodeKey(keyInput);
-            this.park.log("Introdução da chave/cartão: " + keyInput);
+            this.park.log("Key/Card introduction: " + keyInput);
         }
     }
 
     /**
-     * Método que permite ao utilizador simular duas posições da chave, para
-     * abrir ou fechar a cancela, respetivamente (se aberta → fecha; se fechada
-     * → abre)
-     *
-     * @throws IOException exceção em caso de erro na escrita para o ficheiro
-     * "log"
+     * Method that allows the user to simulate two positions of the key, to open
+     * or close the gate, respectively (if open → close; if closed → open)
+     * 
+     * @throws IOException exception in case of error in writing to the
+     * "config" file
      */
     public void AF() throws IOException {
         if (!this.park.isBlock()) {
             this.park.changeMode();
-            this.park.log("Modo alterado para: " + this.park.getMode());
+            this.park.log("Mode changed to: " + this.park.getMode());
         }
     }
 
     /**
-     * Método que permite ao utilizador simular o reinício do sistema do parque
-     * de estacionamento (coloca os lugares todos livres, semáforo a verde e
-     * cancela fechada).
-     *
-     * @throws IOException exceção em caso de erro na escrita para o ficheiro
+     * Method that allows the user to simulate the restart of the car park system
+     * (set all spaces free, traffic light is set to green and the sets the gate
+     * to closed).
+     * 
+     * @throws IOException exception in case of error in writing to the
+     * "config" file
      */
     public void R() throws IOException {
         if (this.park.isBlock() == false) {
             this.park.setSlots(0);
             this.park.setLight(true);
             this.park.setGate(false);
-            this.park.getSlotsL().setText("Lugares ocupados: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS);
-            JOptionPane.showMessageDialog(null, "Sistema resetado com sucesso!", "Aviso",
+            this.park.getSlotsL().setText("Occupied places: " + this.park.getSlots() + "/" + this.park.MAX_SLOTS);
+            JOptionPane.showMessageDialog(null, "System reset successfully!", "Warning",
                     JOptionPane.WARNING_MESSAGE);
-            this.park.log("Sistema resetado.");
+            this.park.log("System reset.");
         }
     }
 
     /**
-     * Método que permite ao utilizador simular a paragem imediata do sistema do
-     * parque de estacionamento (não há movimento da cancela e o semáforo
-     * transita para vermelho)
+     * Method that allows the user to simulate the immediate stop of the car park
+     * system (there is no movement of the gate and the traffic light changes to red)
      */
     public void P() {
         if (this.park.isBlock() == true) {
@@ -233,12 +233,12 @@ public class KeyCardButtons extends Thread implements ActionListener {
             } else {
                 this.park.setLight(true);
             }
-            JOptionPane.showMessageDialog(null, "Sistema desbloqueado com sucesso!", "Aviso",
+            JOptionPane.showMessageDialog(null, "System successfully unlocked!", "Warning",
                     JOptionPane.WARNING_MESSAGE);
         } else {
             this.park.setBlock(true);
             this.park.setLight(false);
-            JOptionPane.showMessageDialog(null, "Sistema bloqueado com sucesso!", "Aviso",
+            JOptionPane.showMessageDialog(null, "System successfully blocked!", "Warning",
                     JOptionPane.WARNING_MESSAGE);
         }
     }

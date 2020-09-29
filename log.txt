@@ -31,3 +31,45 @@
 [2020/09/22 18:07:10] - Configurações guardadas.
 [2020/09/22 18:07:11] - Programa fechado.
 
+[2020/09/22 18:58:29] - Programa inicializado.
+[2020/09/22 18:58:29] - Configurações carregadas.
+[2020/09/22 18:58:29] - Threads inicializadas.
+[2020/09/22 18:58:29] - Inicialização completa
+[2020/09/22 18:58:31] - Botão: Cartão/Chave
+[2020/09/22 18:58:34] - Introdução da chave/cartão: 1234
+[2020/09/22 18:58:37] - Chave válida. Acesso concedido!
+[2020/09/22 18:58:37] - Chave verificada
+[2020/09/22 18:58:38] - Botão: Entrada de carro
+[2020/09/22 18:58:39] - Entrada de carro.
+[2020/09/22 18:58:39] - Cancela fechada
+[2020/09/22 18:58:39] - Configurações guardadas.
+[2020/09/28 20:02:40] - Programa inicializado.
+[2020/09/28 20:02:40] - Configurações carregadas.
+[2020/09/28 20:02:40] - Threads inicializadas.
+[2020/09/28 20:02:40] - Inicialização completa
+[2020/09/28 20:02:42] - Programa fechado.
+
+[2020/09/29 12:41:09] - Program initialized.
+[2020/09/29 12:41:09] - Configurations loaded.
+[2020/09/29 12:41:09] - Initialized Threads.
+[2020/09/29 12:41:09] - Full initialization
+[2020/09/29 12:41:28] - Program closed.
+
+[2020/09/29 12:42:54] - Program initialized.
+[2020/09/29 12:42:55] - Configurations loaded.
+[2020/09/29 12:42:55] - Initialized Threads.
+[2020/09/29 12:42:55] - Full initialization
+[2020/09/29 12:43:06] - Program closed.
+
+[2020/09/29 12:43:08] - Program initialized.
+[2020/09/29 12:43:08] - Configurations loaded.
+[2020/09/29 12:43:08] - Initialized Threads.
+[2020/09/29 12:43:08] - Full initialization
+[2020/09/29 12:43:10] - Button: Card/Key
+[2020/09/29 12:43:13] - Key/Card introduction: 1234
+[2020/09/29 12:43:17] - Valid key. Access granted!
+[2020/09/29 12:43:17] - Verified key
+[2020/09/29 12:43:56] - Program initialized.
+[2020/09/29 12:43:56] - Configurations loaded.
+[2020/09/29 12:43:56] - Initialized Threads.
+[2020/09/29 12:43:56] - Full initialization
