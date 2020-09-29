@@ -12,10 +12,11 @@ This project main goal is to simulate some operations made at a parking lot usin
 
 ## Project Screenshots
 Some of the project screenshots
-![](https://user-images.githubusercontent.com/44362304/94554293-cbd0d700-0251-11eb-9e78-daad69a2a970.png)
-
+![](https://user-images.githubusercontent.com/44362304/94554899-aabcb600-0252-11eb-93a4-741719f795bf.png)
 
 ## Documentation
+To access project javadoc you need to download to a zip format this project and then go to directory dist/javadoc/index.html
+<p><a href="https://github.com/Joaodevgit/Parking-Lot/tree/master/dist/javadoc"> Documentation File</a></p>
 
 ## Project Contributors
 | João Pereira | Francisco Spínola |
