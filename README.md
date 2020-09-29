@@ -28,4 +28,4 @@ To access project javadoc you need to download to a zip format this project and 
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 - **[MIT license](http://opensource.org/licenses/mit-license.php)**
-- Copyright 2020 © João Pereira.
+- Copyright 2020 © João Pereira, Francisco Spínola.
