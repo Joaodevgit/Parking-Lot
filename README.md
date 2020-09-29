@@ -12,6 +12,7 @@ This project main goal is to simulate some operations made at a parking lot usin
 
 ## Project Screenshots
 Some of the project screenshots
+![](https://user-images.githubusercontent.com/44362304/94554293-cbd0d700-0251-11eb-9e78-daad69a2a970.png)
 
 
 ## Documentation
