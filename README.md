@@ -22,7 +22,7 @@ To access project javadoc you need to download to a zip format this project and 
 | João Pereira | Francisco Spínola |
 | :---: |:---:| 
 | ![João Pereira](https://avatars2.githubusercontent.com/u/44362304?s=200&u=e779f8e4e1d4788360e7478a675df73f219b42b4&v=3)| ![Francisco Spínola](https://user-images.githubusercontent.com/44362304/94473787-94681900-01c4-11eb-89a4-9b80aa9a7b9f.png?s=200&v=3) |
-| <a href="https://github.com/Joaodevgit" target="_blank">`github.com/Joaodevgit`</a> | <a href="https://github.com/fspinola85" target="_blank">`github.com/fspinola85`</a>|
+| <a href="https://github.com/Joaodevgit" target="_blank">`github.com/Joaodevgit`</a> | <a href="https://github.com/fssecur3" target="_blank">`github.com/fssecur3`</a>|
 
 ## License
 
